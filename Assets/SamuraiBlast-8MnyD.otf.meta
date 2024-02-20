@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 8b4c0e07cf3ed8946b52430e75c4f227
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Samurai Blast
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 74452d9136680864583165f34d427f84, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
