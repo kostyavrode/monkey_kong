@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public GameObject shield;
     public GameObject hat;
     public GameObject skirt;
+    public GameObject topHat;
+    public GameObject goldRing;
     private void Awake()
     {
         instance = this;
@@ -60,6 +62,14 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("Buy2"))
         {
             skirt.SetActive(true);
+        }
+        if (PlayerPrefs.HasKey("Buy3"))
+        {
+            topHat.SetActive(true);
+        }
+        if (PlayerPrefs.HasKey("Buy4"))
+        {
+            goldRing.SetActive(true);
         }
     }
     private void FixedUpdate()
