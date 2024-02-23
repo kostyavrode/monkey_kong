@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class MonkeyController : MonoBehaviour
 {
+    public static MonkeyController instance;
     public Animator animator;
     public Rigidbody rb;
     public Transform startPosition;
@@ -13,8 +16,10 @@ public class MonkeyController : MonoBehaviour
     private bool isBlinking;
     private SkinnedMeshRenderer mesh;
     private float tttttempp;
+    public Button jumpButton;
     private void Awake()
     {
+        instance = this;
         if (!PlayerPrefs.HasKey("Shield"))
         {
             PlayerPrefs.SetInt("Shield", 0);
@@ -47,10 +52,38 @@ public class MonkeyController : MonoBehaviour
             transform.position = new Vector3(transform.position.x + 0.1f* moveSpeed * 2 * Time.deltaTime, transform.position.y, transform.position.z);
         }
     }
+    public void Jump()
+    {
+        if (isAlive)
+        {
+            jumpButton.interactable = false;
+            isAlive = false;
+            animator.SetTrigger("isJumping");
+            StartCoroutine(WaitForJmp());
+        }
+    }
+    private IEnumerator WaitForJmp()
+    {
+        yield return new WaitForSeconds(1);
+        transform.DOMove(transform.position+ transform.up * 3, 0.5f).OnComplete(EndJump);
+    }
+    private void EndJump()
+    {
+        isAlive = true;
+        jumpButton.interactable = true;
+    }
+    public void StopMove()
+    {
+        isAlive = !isAlive;
+        if (isAlive)
+            animator.StopPlayback();
+        else
+            animator.StartPlayback();
+    }
     private void StartMove()
     {
         transform.position = startPosition.position;
-        transform.Rotate(new Vector3(0, 180, 0));
+        transform.Rotate(new Vector3(0, 90, 0));
         animator.SetBool("isMoving", true);
         isAlive = true;
     }

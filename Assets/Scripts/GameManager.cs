@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (isGameStarted)
+        if (isGameStarted && MonkeyController.instance.isAlive)
         {
             score++;
             scoreBar.text ="Score: "+ score.ToString();
