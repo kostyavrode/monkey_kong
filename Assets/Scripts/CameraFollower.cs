@@ -15,6 +15,7 @@ public class CameraFollower : MonoBehaviour
     public void StartShow()
     {
         transform.DOMove(bananaPlace.position, 2f).SetEase(Ease.Flash).OnComplete(StopShow);
+        transform.DORotateQuaternion(startPlace.rotation, 1f);
     }
     public void StopShow()
     {
@@ -23,6 +24,7 @@ public class CameraFollower : MonoBehaviour
     public void GameCam()
     {
         transform.DOMove(startPlace.position, 1f).OnComplete(StartFollow);
+        
     }
     public void StartFollow()
     {

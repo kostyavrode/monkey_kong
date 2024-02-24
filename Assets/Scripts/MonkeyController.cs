@@ -12,6 +12,8 @@ public class MonkeyController : MonoBehaviour
     public Transform startPosition;
     public bool isAlive;
     public float moveSpeed;
+    private float horMoveSpeed;
+    private float tmovespeed;
     public Joystick joystick;
     private bool isBlinking;
     private SkinnedMeshRenderer mesh;
@@ -31,6 +33,8 @@ public class MonkeyController : MonoBehaviour
         {
             rb = GetComponent<Rigidbody>();
         }
+        tmovespeed = moveSpeed;
+        horMoveSpeed = moveSpeed;
     }
     private void OnDisable()
     {
@@ -40,7 +44,7 @@ public class MonkeyController : MonoBehaviour
     {
         if (transform.position.x < 12.8f && transform.position.x > 8.5f)
         {
-            transform.position = new Vector3(transform.position.x - joystick.Horizontal*moveSpeed*1.5f*Time.deltaTime, transform.position.y + moveSpeed * Time.deltaTime, transform.position.z);
+            transform.position = new Vector3(transform.position.x - joystick.Horizontal*horMoveSpeed*1.5f*Time.deltaTime, transform.position.y + moveSpeed * Time.deltaTime, transform.position.z);
             transform.rotation = Quaternion.Euler(transform.rotation.x, -180f, transform.rotation.z - joystick.Horizontal * 15f);
         }
         else if (transform.position.x > 12.8f)
@@ -89,6 +93,11 @@ public class MonkeyController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag=="Stop")
+        {
+            moveSpeed = 0;
+            //animator.StopPlayback();
+        }
         if (other.tag=="Obstacle" && PlayerPrefs.GetInt("Shield")==0)
         {
             StartFalling();
@@ -97,6 +106,14 @@ public class MonkeyController : MonoBehaviour
         {
             DestroyShield();
             Debug.Log("DestroyShield");
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag=="Stop")
+        {
+            moveSpeed = tmovespeed;
+            //animator.StartPlayback();
         }
     }
     private void DestroyShield()
